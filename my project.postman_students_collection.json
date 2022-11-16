@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "e1e0640a-f906-43d0-ba1f-5f832285a075",
+		"name": "my project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19031163"
+	},
+	"item": [
+		{
+			"name": "add student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonfile = pm.response.json()\r",
+							"var studintID = jsonfile.id\r",
+							"pm.environment.set(\"studentID\", studintID);\r",
+							"\r",
+							"pm.test(\"check POST request is successful\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"may\",\r\n    \"email\": \"ma@mail.com\",\r\n    \"password\": \"123467\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/students/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						""
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "ghgh@hhh.com",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "2552555",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get student by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check student's first_name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.first_name).to.eql(\"may\");\r",
+							"});\r",
+							"pm.test(\"check if the email is valid\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\".com\");\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"check the request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/students/{{studentID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						"{{studentID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit student's email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"may\",\r\n    \"email\": \"ma8@mail.com\",\r\n    \"password\": \"123467\"\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/students/{{studentID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						"{{studentID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete student",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/students/{{studentID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						"{{studentID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get student after delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the request is successful\", function () {\r",
+							"    pm.response.to.have.status(404)\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/students/{{studentID}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students",
+						"{{studentID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all students",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the request is successful\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{url}}/students",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var token = jsonData.accessToken\r",
+							"\r",
+							"pm.environment.set(\"token\", token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"gehad@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get secure data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/660/users/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"660",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
